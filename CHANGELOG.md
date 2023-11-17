@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next
+## 0.1.4
 
 * Mongoid 8 compatibility
 
