@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.0
+
+* Add permalink setter
+
 ## 0.1.4
 
 * Mongoid 8 compatibility

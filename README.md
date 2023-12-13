@@ -38,6 +38,9 @@ my_doc.path.permalink # => 'LevelThree'
 my_doc.path.parent_path # => 'LevelOne/LevelTwo'
 my_doc.path.parent_permalink # => 'LevelTwo'
 my_doc.path.has_parent? # => true
+
+my_doc.path.permalink = 'NewPermalink'
+puts my_doc.path.permalink # => 'NewPermalink'
 ```
 
 ## Development
