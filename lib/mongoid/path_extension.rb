@@ -2,6 +2,8 @@ require 'mongoid'
 
 module Mongoid
   class PathExtension < String
+    delegate(:permalink, to: :parent, prefix: true)
+
     def initialize(str)
       super str.to_s
       @str = str.to_s
@@ -20,32 +22,31 @@ module Mongoid
       components.last
     end
 
+    def permalink=(value)
+      return if value.blank?
+      new_str = [parent.to_s, value].join('/')
+      @str.replace(new_str)
+    end
+
     def absolute
       ['/', @str].join
     end
 
     def has_parent?
-      components.length > 1
+      parent.present?
     end
 
-    def ancestor_paths
-      return unless has_parent?
-      res = []
-      components[0..-2].each_with_index do |component, index|
-        res << components[0..index].join('/')
+    def parent
+      ancestors.last
+    end
+    alias_method :parent_path, :parent
+
+    def ancestors
+      components[0..-2].each_with_index.map do |component, index|
+        Mongoid::PathExtension.new(components[0..index].join('/'))
       end
-      res
     end
-
-    def parent_path
-      return unless has_parent?
-      components[0..-2].join('/')
-    end
-
-    def parent_permalink
-      return unless has_parent?
-      components[-2]
-    end
+    alias_method :ancestor_paths, :ancestors
 
     class << self
       def demongoize(value)
