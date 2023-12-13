@@ -45,4 +45,27 @@ describe Mongoid::PathExtension do
     _(Mongoid::PathExtension.new('LevelOne/LevelTwo').has_parent?).must_equal true
     _(Mongoid::PathExtension.new('LevelOne').has_parent?).must_equal false
   end
+
+  it "allows setting permalink" do
+    subject.path.permalink = 'NewPermalink'
+    _(subject.path.permalink).must_equal 'NewPermalink'
+  end
+
+  it "does not allow setting permalink to nil" do
+    subject.path.permalink = nil
+    _(subject.path.permalink).must_equal 'LevelThree'
+  end
+
+  it "works when there are no ancestors" do
+    subject.path = 'LevelOne'
+    _(subject.path.permalink).must_equal 'LevelOne'
+    _(subject.path.parent).must_be_nil
+    _(subject.path.ancestors).must_equal []
+  end
+
+  it "allows setting permalink when there are no ancestors" do
+    subject.path = 'LevelOne'
+    subject.path.permalink = 'NewPermalink'
+    _(subject.path.permalink).must_equal 'NewPermalink'
+  end
 end
