@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.1
+
+* Fix setting permalink on parentless path resulting in prefixed forward slash
+
 ## 0.2.0
 
 * Add permalink setter
