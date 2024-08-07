@@ -24,7 +24,7 @@ module Mongoid
 
     def permalink=(value)
       return if value.blank?
-      new_str = [parent.to_s, value].join('/')
+      new_str = [parent&.to_s, value].compact.join("/")
       @str.replace(new_str)
     end
 

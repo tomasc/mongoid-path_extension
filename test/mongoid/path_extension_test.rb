@@ -51,6 +51,13 @@ describe Mongoid::PathExtension do
     _(subject.path.permalink).must_equal 'NewPermalink'
   end
 
+  it "allows setting permalink without parent" do
+    subject.path = "OldPermalink"
+    subject.path.permalink = 'NewPermalink'
+    _(subject.path.permalink).must_equal 'NewPermalink'
+    _(subject.path).must_equal 'NewPermalink'
+  end
+
   it "does not allow setting permalink to nil" do
     subject.path.permalink = nil
     _(subject.path.permalink).must_equal 'LevelThree'
